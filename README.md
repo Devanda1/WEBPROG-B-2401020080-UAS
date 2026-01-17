@@ -5,7 +5,7 @@ Project UAS Web Programming menggunakan PHP Framework Laravel.
 ## 👤 Identitas
 - Nama  : Made Andhika Devanda Wijaya
 - NIM   : 2401020080
-- Kelas : Web Programming B
+- Kelas : RSK B
 
 ## 📌 Deskripsi Project
 Laravel Game Gallery adalah aplikasi web berbasis Laravel yang menampilkan
