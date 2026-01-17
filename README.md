@@ -59,7 +59,7 @@ Copy code
 http://127.0.0.1:8000
 
 
-📂 Struktur Database
+##📂 Struktur Database
 users
 
 karakters
@@ -70,7 +70,7 @@ cache
 
 migrations
 
-📎 Catatan
+##📎 Catatan
 Project ini dibuat untuk memenuhi tugas UAS Web Programming
 
 Repository diset PUBLIC sesuai ketentuan
