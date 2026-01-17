@@ -4,96 +4,99 @@
 
 @push('head')
 <style>
-/* ====== DETAIL PAGE ====== */
+/* ================= PAGE ================= */
 .detail-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 80px 20px;
   min-height: 100vh;
-  animation: fadeInDetail 1s ease;
+  padding: 100px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: relative;
   overflow: hidden;
+  animation: fadeInDetail 1s ease;
 }
 
 @keyframes fadeInDetail {
-  from { opacity: 0; transform: translateY(30px); }
+  from { opacity: 0; transform: translateY(25px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ====== BACKGROUND ====== */
+/* ================= BACKGROUND ================= */
 .detail-bg {
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle at center, rgba(0,0,0,0.6), #000);
   background-image: url("{{ asset('images/' . $karakter->background) }}");
   background-size: cover;
   background-position: center;
-  filter: brightness(0.4) blur(4px);
+  filter: brightness(0.45) blur(4px);
   z-index: -2;
 }
-
-/* ====== CARD ====== */
-.detail-card {
-  background: rgba(15, 20, 30, 0.7);
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  padding: 40px;
-  max-width: 800px;
-  width: 100%;
-  box-shadow: 0 0 25px rgba(0, 234, 255, 0.2);
-  border: 2px solid rgba(0,234,255,0.25);
-  position: relative;
-  z-index: 2;
-  overflow: hidden;
+.detail-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(0,0,0,.45), #000);
 }
 
-/* ====== AURA ====== */
+/* ================= CARD ================= */
+.detail-card {
+  background: rgba(15, 20, 30, 0.75);
+  backdrop-filter: blur(14px);
+  border-radius: 22px;
+  padding: 40px;
+  max-width: 820px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  border: 2px solid rgba(0,234,255,.25);
+  box-shadow: 0 0 30px rgba(0,234,255,.25);
+}
+
+/* ================= AURA ================= */
 .detail-card::before {
   content: "";
   position: absolute;
-  inset: -3px;
-  border-radius: 22px;
-  background: radial-gradient(circle at 50% 50%, var(--aura-color), transparent 60%);
-  filter: blur(35px);
-  opacity: 0.25;
+  inset: -4px;
+  border-radius: 24px;
+  background: radial-gradient(circle, var(--aura-color), transparent 60%);
+  filter: blur(40px);
+  opacity: .4;
   animation: auraPulse 3.5s ease-in-out infinite alternate;
   z-index: -1;
 }
 
 @keyframes auraPulse {
-  0% { transform: scale(1); opacity: 0.3; }
-  100% { transform: scale(1.05); opacity: 0.6; }
+  0% { transform: scale(1); opacity: .35; }
+  100% { transform: scale(1.08); opacity: .65; }
 }
 
-/* ====== IMAGE ====== */
+/* ================= IMAGE ================= */
 .detail-img {
+  max-width: 340px;
+  max-height: 70vh;
   width: 100%;
-  max-width: 360px;
   height: auto;
   object-fit: contain;
-  border-radius: 15px;
-  margin-bottom: 25px;
-  transition: transform 0.6s ease, filter 0.4s ease;
-  box-shadow: 0 0 25px rgba(0,234,255,0.25);
+  border-radius: 16px;
+  margin-bottom: 28px;
+  box-shadow: 0 0 25px rgba(0,234,255,.35);
+  transition: transform .5s ease, filter .4s ease;
 }
 .detail-img:hover {
-  transform: scale(1.04);
+  transform: scale(1.05);
   filter: brightness(1.1);
 }
 
-/* ====== TEXT ====== */
+/* ================= TEXT ================= */
 .detail-name {
   font-family: 'Orbitron', sans-serif;
   font-size: 2.4rem;
-  text-shadow: 0 0 18px var(--aura-color);
-  margin-bottom: 15px;
+  margin-bottom: 14px;
+  text-shadow: 0 0 20px var(--aura-color);
 }
 
 .detail-info p {
-  margin: 8px 0;
+  margin: 6px 0;
   font-size: 1.05rem;
   color: #bfeaff;
 }
@@ -102,41 +105,57 @@
 }
 
 .detail-desc {
-  margin-top: 25px;
+  margin-top: 26px;
   font-size: 1.1rem;
   color: #defaff;
-  line-height: 1.6;
+  line-height: 1.7;
   max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
   text-align: justify;
 }
 
-/* ====== PARTICLE EFFECT ====== */
+/* ================= SPARKLE ================= */
 .sparkle {
   position: absolute;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  opacity: 0.8;
-  pointer-events: none;
   background: var(--aura-color);
+  opacity: .8;
   filter: blur(2px);
-  animation: sparkleFloat 5s linear infinite;
+  pointer-events: none;
+  animation: sparkleFloat 5s linear forwards;
 }
 
 @keyframes sparkleFloat {
-  0% { transform: translateY(0) scale(0.6); opacity: 1; }
-  50% { opacity: 0.7; }
-  100% { transform: translateY(-120px) scale(0.3); opacity: 0; }
+  from { transform: translateY(0) scale(.6); opacity: 1; }
+  to { transform: translateY(-140px) scale(.3); opacity: 0; }
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+  .detail-card { padding: 30px 22px; }
+  .detail-name { font-size: 2rem; }
 }
 </style>
 @endpush
 
 @section('content')
+
 <!-- BACKGROUND -->
 <div class="detail-bg"></div>
 
-<!-- DETAIL CONTENT -->
+<!-- CONTENT -->
 <div class="detail-container" style="--aura-color: {{ $karakter->warna ?? '#00eaff' }}">
-  <div class="detail-card" id="detailCard">
-    <img src="{{ asset('images/' . $karakter->foto) }}" alt="{{ $karakter->nama }}" class="detail-img">
+  <div class="detail-card">
+
+    <img
+      src="{{ asset('images/' . $karakter->foto) }}"
+      alt="{{ $karakter->nama }}"
+      class="detail-img"
+    >
+
     <h2 class="detail-name">{{ $karakter->nama }}</h2>
 
     <div class="detail-info">
@@ -144,28 +163,32 @@
       <p><strong>Peran:</strong> {{ $karakter->jenis }}</p>
     </div>
 
-    <p class="detail-desc">{{ $karakter->deskripsi }}</p>
+    <p class="detail-desc">
+      {{ $karakter->deskripsi }}
+    </p>
+
   </div>
 </div>
 
 @push('scripts')
 <script>
-// ===== SPARKLE EFFECT =====
 document.addEventListener('DOMContentLoaded', () => {
   const container = document.querySelector('.detail-container');
-  function createSparkle() {
-    const sparkle = document.createElement('div');
-    sparkle.classList.add('sparkle');
+
+  function spawnSparkle() {
+    const s = document.createElement('div');
+    s.className = 'sparkle';
     const size = Math.random() * 5 + 3;
-    sparkle.style.width = `${size}px`;
-    sparkle.style.height = `${size}px`;
-    sparkle.style.left = `${Math.random() * 100}%`;
-    sparkle.style.bottom = `-10px`;
-    sparkle.style.animationDuration = `${Math.random() * 3 + 3}s`;
-    container.appendChild(sparkle);
-    setTimeout(() => sparkle.remove(), 5000);
+    s.style.width = size + 'px';
+    s.style.height = size + 'px';
+    s.style.left = Math.random() * 100 + '%';
+    s.style.bottom = '-10px';
+    s.style.animationDuration = (Math.random() * 3 + 3) + 's';
+    container.appendChild(s);
+    setTimeout(() => s.remove(), 5000);
   }
-  setInterval(createSparkle, 500);
+
+  setInterval(spawnSparkle, 650);
 });
 </script>
 @endpush

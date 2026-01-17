@@ -4,260 +4,244 @@
 
 @push('head')
 <style>
-/* ===== LOADING SCREEN MODERN ===== */
-#loadingScreen {
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(circle at center, #02121f, #000);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  color: #00eaff;
-  font-family: 'Orbitron', sans-serif;
+/* ===== LOADING ===== */
+#loadingScreen{
+  position:fixed;inset:0;
+  background:radial-gradient(circle,#02121f,#000);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  z-index:9999;color:#00eaff;
+  font-family:'Orbitron',sans-serif;
 }
-.loading-logo {
-  font-size: 2rem;
-  letter-spacing: 3px;
-  text-shadow: 0 0 15px #00eaff;
-  margin-bottom: 25px;
-  animation: flicker 1.5s infinite alternate;
+.loading-logo{font-size:2rem;letter-spacing:3px;text-shadow:0 0 15px #00eaff;}
+.loading-bar{width:200px;height:8px;background:rgba(0,234,255,.2);border-radius:10px;overflow:hidden;margin-top:20px;}
+.loading-progress{height:100%;width:0;background:linear-gradient(90deg,#00eaff,#007aff);animation:loadBar 2s forwards;}
+@keyframes loadBar{to{width:100%}}
+
+.container{padding-top:90px}
+
+/* ===== FILTER ===== */
+.filter-row{
+  display:flex;gap:14px;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin-bottom:28px;
 }
-@keyframes flicker {
-  0%, 100% { opacity: 1; text-shadow: 0 0 15px #00eaff; }
-  50% { opacity: 0.7; text-shadow: 0 0 8px #0092a8; }
-}
-.loading-bar {
-  width: 200px;
-  height: 8px;
-  background: rgba(0,234,255,0.15);
-  border-radius: 10px;
-  overflow: hidden;
-  position: relative;
-}
-.loading-progress {
-  position: absolute;
-  top: 0; left: 0;
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, #00eaff, #007aff);
-  border-radius: 10px;
-  animation: loadBar 2s ease-in-out forwards;
-}
-@keyframes loadBar {
-  0% { width: 0%; }
-  100% { width: 100%; }
-}
-.loading-text {
-  margin-top: 10px;
-  font-size: 1rem;
-  opacity: 0.8;
-  letter-spacing: 1px;
+.search-input,.filter-select{
+  padding:11px 18px;
+  border-radius:30px;
+  border:2px solid #00eaff;
+  background:rgba(255,255,255,.08);
+  color:#fff;
+  outline:none;
+  font-size:.9rem;
 }
 
-/* ===== SEARCH + FILTER ===== */
-.filter-row {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-  flex-wrap: wrap;
-  margin-bottom: 30px;
-}
-.search-input, .filter-select {
-  padding: 10px 15px;
-  border: 2px solid #00eaff;
-  border-radius: 25px;
-  background: rgba(255,255,255,0.08);
-  color: #fff;
-  outline: none;
-  font-size: 1rem;
-  transition: 0.3s;
-}
-.search-input:focus, .filter-select:focus {
-  box-shadow: 0 0 10px rgba(0,234,255,0.5);
-}
-.filter-select { width: 180px; }
-
-/* ===== GRID LAYOUT ===== */
-.container { padding-top: 80px; }
-.char-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 25px;
+/* ===== GRID ===== */
+.char-grid{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:28px;
 }
 
 /* ===== CARD ===== */
-.char-card-link { text-decoration: none; color: inherit; }
-
-.char-card {
-  position: relative;
-  width: 280px;
-  height: 380px;
-  background: rgba(10, 15, 30, 0.7);
-  border-radius: 18px;
-  overflow: hidden;
-  box-shadow: 0 0 10px rgba(0, 234, 255, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
-  backdrop-filter: blur(8px);
-  z-index: 0;
+.char-card{
+  width:280px;
+  height:420px;
+  background:rgba(12,18,30,.8);
+  border-radius:22px;
+  overflow:hidden;
+  box-shadow:0 0 18px rgba(0,234,255,.12);
+  transition:.35s ease;
+  position:relative;
 }
-.char-card:hover {
-  transform: translateY(-6px) scale(1.03);
-  box-shadow: 0 0 20px rgba(0,234,255,0.25);
+.char-card:hover{
+  transform:translateY(-8px) scale(1.04);
+  box-shadow:0 0 28px rgba(0,234,255,.35);
 }
 
-/* BORDER GLOW */
-.char-border {
-  position: absolute;
-  inset: 0;
-  border-radius: 18px;
-  border: 2px solid rgba(0,234,255,0.3);
-  box-shadow: 0 0 8px rgba(0,234,255,0.3);
-  pointer-events: none;
-  z-index: -1;
-  transition: all 0.4s ease;
-}
-.char-card:hover .char-border {
-  border-color: rgba(0,234,255,0.6);
-  box-shadow: 0 0 18px rgba(0,234,255,0.4);
+.char-img{
+  width:100%;
+  height:240px;
+  object-fit:contain;
+  background:rgba(0,0,0,.35);
 }
 
-/* GAMBAR */
-.char-img {
-  width: 100%;
-  height: 240px;
-  object-fit: contain;
-  object-position: center;
-  background: rgba(0,0,0,0.25);
-  border-bottom: 1px solid rgba(0,234,255,0.2);
-  transition: transform 0.4s ease;
+.char-body{
+  padding:14px;
+  text-align:center;
+  background:linear-gradient(to top,rgba(0,0,0,.7),rgba(0,0,0,.4));
 }
-.char-card:hover .char-img { transform: scale(1.05); }
+.char-body h5{
+  color:#00eaff;
+  font-family:'Orbitron',sans-serif;
+  font-size:1.1rem;
+}
+.char-body p{
+  font-size:.85rem;
+  color:#d6f6ff;
+  margin:4px 0;
+}
 
-/* TEKS */
-.char-body {
-  text-align: center;
-  padding: 12px 15px;
-  background: rgba(0,0,0,0.4);
-  height: 140px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+/* ===== ADMIN ACTION ===== */
+.card-actions{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  margin-top:12px;
 }
-.char-body h5 {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 1.2rem;
-  color: #00eaff;
-  text-shadow: 0 0 10px rgba(0,234,255,0.6);
-  margin-bottom: 5px;
-}
-.char-body p { font-size: 0.9rem; color: #bfeaff; margin: 4px 0; }
 
-@media (max-width: 768px) {
-  .char-card { width: 90%; height: 350px; }
+.btn-action{
+  padding:7px 18px;
+  border-radius:30px;
+  font-size:.75rem;
+  font-weight:600;
+  border:none;
+  cursor:pointer;
+  transition:.3s ease;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+.btn-edit{
+  background:linear-gradient(90deg,#00eaff,#00b7ff);
+  color:#001b25;
+  box-shadow:0 0 12px rgba(0,234,255,.4);
+}
+.btn-edit:hover{
+  transform:scale(1.08);
+  box-shadow:0 0 20px rgba(0,234,255,.7);
+}
+
+.btn-delete{
+  background:linear-gradient(90deg,#ff4d4d,#ff2d2d);
+  color:#fff;
+  box-shadow:0 0 10px rgba(255,77,77,.4);
+}
+.btn-delete:hover{
+  transform:scale(1.08);
+  box-shadow:0 0 18px rgba(255,77,77,.7);
 }
 </style>
 @endpush
 
 @section('content')
-<!-- LOADING SCREEN -->
+
+<!-- LOADING -->
 <div id="loadingScreen">
-  <div class="loading-logo">LARAVEL GALLERY</div>
+  <div class="loading-logo">LARAVEL GAME GALLERY</div>
   <div class="loading-bar"><div class="loading-progress"></div></div>
-  <div class="loading-text">Loading... Please Wait</div>
 </div>
 
 <div class="container fade-in-page">
-  <h2 class="text-center mb-4 fw-bold" style="font-family:'Orbitron',sans-serif;">Daftar Karakter Game</h2>
 
-  <!-- SEARCH + FILTER -->
+  <h2 class="text-center mb-4 fw-bold" style="font-family:'Orbitron',sans-serif">
+    Daftar Karakter Game
+  </h2>
+
+  <!-- ADD -->
+  @auth
+<div style="text-align:center;margin-bottom:25px">
+  <a href="{{ route('karakter.create') }}"
+     style="
+       display:inline-block;
+       padding:10px 22px;
+       border-radius:30px;
+       background:#00eaff;
+       color:#000;
+       font-weight:600;
+       box-shadow:0 0 15px rgba(0,234,255,.5)
+     ">
+    + Tambah Karakter
+  </a>
+</div>
+@endauth
+
+
+  <!-- SEARCH -->
+  <form method="GET" action="{{ route('karakter.index') }}" class="filter-row">
+    <input type="text" name="search" class="search-input"
+           placeholder="🔍 Cari nama / game..."
+           value="{{ request('search') }}">
+    <button type="submit" class="search-input">Cari</button>
+  </form>
+
+  <!-- FILTER -->
   <div class="filter-row">
-    <input type="text" id="searchInput" class="search-input" placeholder="🔍 Cari karakter...">
     <select id="filterGame" class="filter-select">
       <option value="">🎮 Semua Game</option>
-      @foreach (collect($karakterList)->pluck('game')->unique() as $game)
+      @foreach ($karakterList->pluck('game')->unique() as $game)
         <option value="{{ strtolower($game) }}">{{ $game }}</option>
       @endforeach
     </select>
+
     <select id="filterPeran" class="filter-select">
       <option value="">🧩 Semua Peran</option>
-      @foreach (collect($karakterList)->pluck('jenis')->unique() as $jenis)
+      @foreach ($karakterList->pluck('jenis')->unique() as $jenis)
         <option value="{{ strtolower($jenis) }}">{{ $jenis }}</option>
       @endforeach
     </select>
   </div>
 
-  <!-- GRID KARAKTER -->
+  <!-- GRID -->
   <div class="char-grid" id="charGrid">
     @foreach ($karakterList as $karakter)
-      <a href="{{ route('karakter.show', $karakter->id) }}" 
-         class="char-card-link js-click"
-         data-name="{{ strtolower($karakter->nama) }}"
-         data-game="{{ strtolower($karakter->game) }}"
-         data-role="{{ strtolower($karakter->jenis) }}">
-        <div class="char-card">
-          <div class="char-border"></div>
-          <img src="{{ asset('images/' . $karakter->foto) }}" alt="{{ $karakter->nama }}" class="char-img">
-          <div class="char-body">
-            <h5>{{ $karakter->nama }}</h5>
-            <p><strong>Game:</strong> {{ $karakter->game }}</p>
-            <p><strong>Peran:</strong> {{ $karakter->jenis }}</p>
-          </div>
-        </div>
-      </a>
-    @endforeach
-  </div>
+      <div class="char-card"
+           data-game="{{ strtolower($karakter->game) }}"
+           data-role="{{ strtolower($karakter->jenis) }}">
 
-  <div class="text-center mt-4">
+        <a href="{{ route('karakter.show',$karakter->id) }}">
+          <img src="{{ asset('images/'.$karakter->foto) }}"
+               alt="{{ $karakter->nama }}"
+               class="char-img">
+        </a>
+
+        <div class="char-body">
+          <h5>{{ $karakter->nama }}</h5>
+          <p>{{ $karakter->game }}</p>
+          <p>{{ $karakter->jenis }}</p>
+
+          @auth
+          <div class="card-actions">
+            <a href="{{ route('karakter.edit',$karakter->id) }}"
+               class="btn-action btn-edit">✏️ Edit</a>
+
+            <form action="{{ route('karakter.destroy',$karakter->id) }}"
+                  method="POST"
+                  onsubmit="return confirm('Hapus karakter ini?')">
+              @csrf
+              @method('DELETE')
+              <button class="btn-action btn-delete">🗑 Hapus</button>
+            </form>
+          </div>
+          @endauth
+        </div>
+      </div>
+    @endforeach
   </div>
 </div>
 
 @push('scripts')
 <script>
-// ===== LOADING ANIMATION =====
-window.addEventListener('load', () => {
-  const loading = document.getElementById('loadingScreen');
-  const progress = document.querySelector('.loading-progress');
-  progress.addEventListener('animationend', () => {
-    loading.style.opacity = '0';
-    loading.style.transition = 'opacity 0.8s ease';
-    setTimeout(() => loading.remove(), 800);
-  });
-});
+window.addEventListener('load',()=>{
+  document.getElementById('loadingScreen').style.display='none'
+})
 
-// ===== SEARCH + FILTER =====
-const searchInput = document.getElementById('searchInput');
-const filterGame = document.getElementById('filterGame');
-const filterPeran = document.getElementById('filterPeran');
-const charGrid = document.getElementById('charGrid');
+const filterGame=document.getElementById('filterGame')
+const filterPeran=document.getElementById('filterPeran')
+const cards=document.querySelectorAll('.char-card')
 
-function filterCards() {
-  const search = searchInput.value.toLowerCase();
-  const game = filterGame.value;
-  const role = filterPeran.value;
-
-  const cards = charGrid.querySelectorAll('.char-card-link');
-  cards.forEach(card => {
-    const name = card.dataset.name;
-    const gameData = card.dataset.game;
-    const roleData = card.dataset.role;
-
-    const matchName = name.includes(search);
-    const matchGame = game ? gameData === game : true;
-    const matchRole = role ? roleData === role : true;
-
-    card.style.display = (matchName && matchGame && matchRole) ? '' : 'none';
-  });
+function filterCards(){
+  cards.forEach(c=>{
+    const g=!filterGame.value||c.dataset.game===filterGame.value
+    const p=!filterPeran.value||c.dataset.role===filterPeran.value
+    c.style.display=(g&&p)?'':'none'
+  })
 }
-
-[searchInput, filterGame, filterPeran].forEach(el => {
-  el.addEventListener('input', filterCards);
-  el.addEventListener('change', filterCards);
-});
+filterGame.addEventListener('change',filterCards)
+filterPeran.addEventListener('change',filterCards)
 </script>
 @endpush
 @endsection

@@ -4,8 +4,10 @@
 
 @push('head')
 <style>
-/* ====== HOME CONTAINER ====== */
+/* ================= HOME CONTAINER ================= */
 .home-container {
+  padding-top: 80px;
+  transform: translateY(-160px);
   position: relative;
   height: 100vh;
   width: 100%;
@@ -24,7 +26,7 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ====== POSTER SLIDES ====== */
+/* ================= POSTER SLIDES ================= */
 .poster-slideshow {
   position: fixed;
   inset: 0;
@@ -36,26 +38,21 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: brightness(0.45) blur(0px);
+  filter: brightness(0.45);
   opacity: 0;
   transform: scale(1.04);
   transition: opacity 2s ease-in-out, transform 10s ease, filter 1.6s ease-in-out;
-  z-index: 0;
 }
-
 .poster-slideshow img.active {
   opacity: 1;
   transform: scale(1);
-  z-index: 1;
 }
-
 .poster-slideshow img.fading {
   filter: blur(5px) brightness(0.5) saturate(0.9);
   opacity: 0;
-  z-index: 0;
 }
 
-/* ====== OVERLAY ====== */
+/* ================= OVERLAY ================= */
 .overlay {
   position: absolute;
   inset: 0;
@@ -63,7 +60,7 @@
   z-index: -1;
 }
 
-/* ====== TEKS ====== */
+/* ================= TEXT ================= */
 .home-title {
   font-family: 'Orbitron', sans-serif;
   font-size: 3rem;
@@ -76,18 +73,18 @@
   font-size: 1.2rem;
   color: #bfeaff;
   max-width: 600px;
-  margin: 0 auto 25px;
+  margin: 0 auto 40px;
   text-shadow: 0 0 10px rgba(0,234,255,0.3);
   line-height: 1.6;
 }
 
-/* ====== BUTTON PREVIEW ====== */
+/* ================= BUTTON ================= */
 .preview-btn {
   background: linear-gradient(90deg, #00eaff, #007aff);
   color: white;
   border: none;
   border-radius: 30px;
-  padding: 10px 25px;
+  padding: 12px 28px;
   font-weight: 600;
   font-size: 0.95rem;
   text-decoration: none;
@@ -99,21 +96,18 @@
   box-shadow: 0 0 25px rgba(0,234,255,0.8);
 }
 
-/* ====== CAPTION ====== */
+/* ================= CAPTION ================= */
 .poster-caption {
   position: absolute;
-  bottom: 50px;
+  bottom: 60px;
   left: 50%;
   transform: translateX(-50%);
   color: #bfeaff;
-  font-family: 'Poppins', sans-serif;
   font-size: 1rem;
   text-shadow: 0 0 10px rgba(0,234,255,0.6);
-  opacity: 0.9;
-  text-align: center;
 }
 
-/* ====== FOOTER ====== */
+/* ================= FOOTER ================= */
 .home-footer {
   position: absolute;
   bottom: 20px;
@@ -123,7 +117,7 @@
   opacity: 0.8;
 }
 
-/* ====== VIDEO MODAL ====== */
+/* ================= VIDEO MODAL ================= */
 .video-modal {
   position: fixed;
   inset: 0;
@@ -133,7 +127,6 @@
   align-items: center;
   justify-content: center;
   z-index: 99999;
-  animation: fadeIn 0.4s ease;
 }
 .video-modal.active { display: flex; }
 .video-modal iframe {
@@ -141,7 +134,6 @@
   height: 60%;
   border: none;
   border-radius: 14px;
-  box-shadow: 0 0 25px rgba(0,234,255,0.6);
 }
 .video-close {
   position: absolute;
@@ -150,40 +142,84 @@
   font-size: 2rem;
   color: #fff;
   cursor: pointer;
-  transition: 0.3s ease;
 }
-.video-close:hover { color: #00eaff; }
-@keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+
+/* ================= GLOBAL LOADING ================= */
+#globalLoading {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, #020b14, #000);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999999;
+}
+.loader-title {
+  font-family: 'Orbitron', sans-serif;
+  color: #00eaff;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  letter-spacing: 3px;
+}
+.loader-bar {
+  width: 260px;
+  height: 6px;
+  background: rgba(0,234,255,0.2);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.loader-bar span {
+  display: block;
+  height: 100%;
+  width: 40%;
+  background: linear-gradient(90deg, #00eaff, #007aff);
+  animation: loadingMove 1.2s infinite ease-in-out;
+}
+@keyframes loadingMove {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(300%); }
+}
 </style>
 @endpush
 
 @section('content')
+
+<!-- ===== GLOBAL LOADING ===== -->
+<div id="globalLoading">
+  <div>
+    <div class="loader-title">LARAVEL GAME GALLERY</div>
+    <div class="loader-bar"><span></span></div>
+  </div>
+</div>
+
+<!-- ===== POSTER SLIDESHOW ===== -->
 <div class="poster-slideshow" id="posterSlideshow">
-  <img src="{{ asset('images/posters/lara.jpg') }}" alt="Lara Croft">
-  <img src="{{ asset('images/posters/mario.jpg') }}" alt="Mario">
-  <img src="{{ asset('images/posters/link.jpg') }}" alt="Link">
-  <img src="{{ asset('images/posters/phainon.jpg') }}" alt="Phainon">
-  <img src="{{ asset('images/posters/six.jpg') }}" alt="Six">
-  <img src="{{ asset('images/posters/isaac.jpg') }}" alt="Isaac Clarke">
-  <img src="{{ asset('images/posters/wukong.jpg') }}" alt="Wukong">
-  <img src="{{ asset('images/posters/olga-unbeast.jpg') }}" alt="Olga Marie Unbeast">
-  <img src="{{ asset('images/posters/ghost.jpg') }}" alt="Ghost COD">
-  <img src="{{ asset('images/posters/anna-takt.jpg') }}" alt="Anna Takt Op.">
-  <img src="{{ asset('images/posters/ranni.jpg') }}" alt="Ranni Elden Ring">
-  <img src="{{ asset('images/posters/pikachu.jpg') }}" alt="Pikachu Pokémon">
-  <img src="{{ asset('images/posters/ds1.jpg') }}" alt="Solaire Dark Souls">
-  <img src="{{ asset('images/posters/genshin.jpg') }}" alt="Furina Genshin Impact">
-  <img src="{{ asset('images/posters/bloodborne.jpg') }}" alt="The Hunter Bloodborne">
+  <img src="{{ asset('images/posters/lara.jpg') }}">
+  <img src="{{ asset('images/posters/mario.jpg') }}">
+  <img src="{{ asset('images/posters/link.jpg') }}">
+  <img src="{{ asset('images/posters/phainon.jpg') }}">
+  <img src="{{ asset('images/posters/six.jpg') }}">
+  <img src="{{ asset('images/posters/isaac.jpg') }}">
+  <img src="{{ asset('images/posters/wukong.jpg') }}">
+  <img src="{{ asset('images/posters/olga-unbeast.jpg') }}">
+  <img src="{{ asset('images/posters/ghost.jpg') }}">
+  <img src="{{ asset('images/posters/anna-takt.jpg') }}">
+  <img src="{{ asset('images/posters/ranni.jpg') }}">
+  <img src="{{ asset('images/posters/pikachu.jpg') }}">
+  <img src="{{ asset('images/posters/ds1.jpg') }}">
+  <img src="{{ asset('images/posters/genshin.jpg') }}">
+  <img src="{{ asset('images/posters/bloodborne.jpg') }}">
   <div class="overlay"></div>
 </div>
 
+<!-- ===== HERO ===== -->
 <div class="home-container">
   <h1 class="home-title">Game Gallery</h1>
   <p class="home-subtitle">
     Galeri karakter lintas dunia game — dari petualangan, sihir, hingga legenda.<br>
     Rasakan aura dan kisah mereka dalam satu dunia sinematik.
   </p>
-  <button id="previewBtn" class="preview-btn"> Preview Game</button>
+  <button id="previewBtn" class="preview-btn">Preview Game</button>
 </div>
 
 <div class="poster-caption" id="posterCaption">Lara Croft — Tomb Raider</div>
@@ -194,7 +230,7 @@
 <!-- ===== VIDEO MODAL ===== -->
 <div class="video-modal" id="videoModal">
   <span class="video-close" id="closeModal">&times;</span>
-  <iframe id="videoFrame" src="" allowfullscreen></iframe>
+  <iframe id="videoFrame" allowfullscreen></iframe>
 </div>
 
 @push('scripts')
@@ -209,54 +245,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const data = [
     { text: "Lara Croft — Tomb Raider", link: "XYtyeqVQnRI" },
-    { text: "Mario — Super Mario Bros Odyssey", link: "5kcdRBHM7kM" },
-    { text: "Link — The Legend of Zelda: Breath of the Wild", link: "zw47_q9wbBE" },
-    { text: "Phainon — Honkai: Star Rail", link: "GaT1GftoqV0" },
+    { text: "Mario — Super Mario Bros", link: "5kcdRBHM7kM" },
+    { text: "Link — Zelda BOTW", link: "zw47_q9wbBE" },
+    { text: "Phainon — Honkai Star Rail", link: "GaT1GftoqV0" },
     { text: "Six — Little Nightmares", link: "aOadxZBsPiA" },
-    { text: "Isaac Clarke — Dead Space Remake", link: "ctQl9wa3ydE" },
-    { text: "Destined One (Wukong) — Black Myth: Wukong", link: "_mAnlVXtDD8" },
-    { text: "Olga Marie Animusphere (Unbeast) — Fate/Grand Order", link: "Q04woulXqu0" },
-    { text: "Ghost — Call of Duty: Modern Warfare II", link: "7el5VW1wij0" },
-    { text: "Anna — Takt Op. Symphony", link: "H9sCal379PQ" },
-    { text: "Ranni the Witch — Elden Ring", link: "E3Huy2cdih0" },
-    { text: "Pikachu — Pokémon Let's Go Pikachu/Eevee", link: "smc3aPdyaaA" },
-    { text: "Solaire — Dark Souls Remastered", link: "KfjG9ZLGBHE" },
+    { text: "Isaac Clarke — Dead Space", link: "ctQl9wa3ydE" },
+    { text: "Wukong — Black Myth", link: "_mAnlVXtDD8" },
+    { text: "Olga Marie — FGO", link: "Q04woulXqu0" },
+    { text: "Ghost — COD", link: "7el5VW1wij0" },
+    { text: "Anna — Takt Op", link: "H9sCal379PQ" },
+    { text: "Ranni — Elden Ring", link: "E3Huy2cdih0" },
+    { text: "Pikachu — Pokémon", link: "smc3aPdyaaA" },
+    { text: "Solaire — Dark Souls", link: "KfjG9ZLGBHE" },
     { text: "Furina — Genshin Impact", link: "kglEsR7bqAY" },
     { text: "The Hunter — Bloodborne", link: "G203e1HhixY" }
   ];
 
   let index = 0;
   slides[index].classList.add('active');
-  caption.textContent = data[index].text;
 
-  // === SLIDESHOW FADE + ZOOM + BLUR ===
   setInterval(() => {
-  const current = slides[index];
-  current.classList.add('fading');
-  current.classList.remove('active');
+    slides[index].classList.remove('active');
+    index = (index + 1) % slides.length;
+    slides[index].classList.add('active');
+    caption.textContent = data[index].text;
+  }, 7000);
 
-  index = (index + 1) % slides.length;
-  const next = slides[index];
-  next.classList.add('active');
-
-  caption.textContent = data[index].text;
-
-  // Hapus efek blur lama setelah transisi selesai
-  setTimeout(() => {
-    current.classList.remove('fading');
-  }, 2000); // sama dengan durasi fade CSS
-}, 7000);
-
-  // === VIDEO MODAL PREVIEW ===
-  previewBtn.addEventListener('click', () => {
-    const videoId = data[index].link;
-    videoFrame.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+  previewBtn.onclick = () => {
+    videoFrame.src = `https://www.youtube.com/embed/${data[index].link}?autoplay=1`;
     videoModal.classList.add('active');
-  });
+  };
 
-  closeModal.addEventListener('click', () => {
+  closeModal.onclick = () => {
     videoModal.classList.remove('active');
-    videoFrame.src = "";
+    videoFrame.src = '';
+  };
+
+  // loading
+  window.addEventListener('load', () => {
+    const loader = document.getElementById('globalLoading');
+    loader.style.opacity = '0';
+    setTimeout(() => loader.remove(), 800);
   });
 });
 </script>

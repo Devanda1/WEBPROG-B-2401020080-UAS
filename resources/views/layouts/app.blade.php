@@ -27,7 +27,7 @@
   <nav class="navbar navbar-dark bg-dark">
     <div class="container">
       <a class="navbar-brand" href="/"> Game Data</a>
-      <a href="{{ route('karakter') }}" class="btn btn-warning btn-sm">Daftar Karakter</a>
+      <a href="{{ route('karakter.index') }}" class="btn btn-warning btn-sm">Daftar Karakter</a>
     </div>
   </nav>
 

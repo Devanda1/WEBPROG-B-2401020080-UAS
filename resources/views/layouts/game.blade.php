@@ -12,6 +12,10 @@
   @stack('head')
 
   <style>
+  .page-content {
+  padding-top: 80px; /* sesuaikan tinggi navbar */
+}
+
     /* ====== BOOT INTRO ====== */
 #bootIntro {
   position: fixed;
@@ -192,23 +196,44 @@
 </div>
 
 <body>
-  <!-- NAVBAR -->
-  <nav>
-    <h1>Game Gallery</h1>
-    <ul>
-      <li><a href="{{ url('/') }}" class="js-click">Home</a></li>
-      <li><a href="{{ route('karakter') }}" class="js-click">Karakter</a></li>
-    </ul>
-    <div class="controls">
-      <button id="musicBtn" class="ctrl-btn">🎵 Musik</button>
-      <button id="themeBtn" class="ctrl-btn">🌗 Tema</button>
-    </div>
-  </nav>
 
-  <!-- MAIN CONTENT -->
-  <main>
-    @yield('content')
-  </main>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+  <span class="logo">Game Gallery</span>
+
+  <ul>
+    <li><a href="{{ url('/') }}" class="js-click">Home</a></li>
+    <li><a href="{{ route('karakter.index') }}" class="js-click">Karakter</a></li>
+  </ul>
+
+  <div class="controls">
+
+    {{-- JIKA BELUM LOGIN --}}
+    @guest
+      <a href="{{ route('login') }}" class="ctrl-btn">
+         Login
+      </a>
+    @endguest
+
+    {{-- JIKA SUDAH LOGIN --}}
+    @auth
+      <form action="{{ route('logout') }}" method="POST" style="display:inline">
+        @csrf
+        <button class="ctrl-btn danger">
+           Logout
+        </button>
+      </form>
+    @endauth
+
+    <button id="musicBtn" class="ctrl-btn"> Music</button>
+    <button id="themeBtn" class="ctrl-btn"> Theme</button>
+  </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main class="page-content">
+  @yield('content')
+</main>
 
   <!-- FOOTER -->
   <footer>
